@@ -5,17 +5,17 @@
 package jdbc;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
-
+import java.sql.Connection;
 /**
  *
  * @author GERAL
  */
 public class ModuloConexao {
     //criando um método ressponável por estabelecer uma conexão com o banco
-    public static java.sql.Connection conectar() {
+    public static Connection conectar() {
         //criando um método ressponável por estabelecer uma conexão com o banco
 
-        java.sql.Connection conexao = null;
+        Connection conexao = null;
         //criando o driver  correspondente ao banco
         String driver = "com.mysql.cj.jdbc.Driver";
         //armazenando informações referente ao banco de dados
