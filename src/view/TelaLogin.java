@@ -45,44 +45,44 @@ public class TelaLogin extends javax.swing.JFrame {
     /**
      * Método responsável pela autenticação e gestão de perfil do usuário
      */
-    private void logar() {        
-       String sql = "select * from tbusuarios where login = ? and senha = md5(?)";
-        try {
-           conexao = ModuloConexao.conectar();
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, jTxtUsario.getText());
-            String captura = new String(jTxtSenha.getPassword());
-            pst.setString(2, captura);
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                String perfil = rs.getString(6);
-                if (perfil.equals("admin")) {
-                    TelaPrincipal principal = new TelaPrincipal();
-                    principal.setVisible(true);
-                    TelaPrincipal.menRel.setEnabled(true);
-                    TelaPrincipal.menCadUsu.setEnabled(true);
-                    TelaPrincipal.lblUsuario.setText(rs.getString(2));
-                    TelaPrincipal.lblUsuario.setForeground(Color.red);
-                    this.dispose();
-                } else {                    
-                    TelaPrincipal principal = new TelaPrincipal();
-                    principal.setVisible(true);
-                   TelaPrincipal.lblUsuario.setText(rs.getString(2));
-                   this.dispose();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuário e/ou senha inválido(s)");
-            }
-        } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        } finally {
-            try {
-              conexao.close();
-            } catch (SQLException ex) {
-               JOptionPane.showMessageDialog(null, ex);
-           }
-        }
-   }
+  //  private void logar() {        
+      // String sql = "select * from tbusuarios where login = ? and senha = md5(?)";
+    //    try {
+          // conexao = ModuloConexao.conectar();
+          //  pst = conexao.prepareStatement(sql);
+           // pst.setString(1, jTxtUsario.getText());
+          //  String captura = new String(jTxtSenha.getPassword());
+          //  pst.setString(2, captura);
+           // rs = pst.executeQuery();
+          //  if (rs.next()) {
+            //    String perfil = rs.getString(6);
+            //    if (perfil.equals("admin")) {
+               //     TelaPrincipal principal = new TelaPrincipal();
+              //      principal.setVisible(true);
+             //       TelaPrincipal.menRel.setEnabled(true);
+              //      TelaPrincipal.menCadUsu.setEnabled(true);
+               //     TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                //    TelaPrincipal.lblUsuario.setForeground(Color.red);
+                //    this.dispose();
+           //     } else {                    
+                //    TelaPrincipal principal = new TelaPrincipal();
+                //    principal.setVisible(true);
+                 //  TelaPrincipal.lblUsuario.setText(rs.getString(2));
+                 //  this.dispose();
+             //   }
+          //  } else {
+               // JOptionPane.showMessageDialog(null, "Usuário e/ou senha inválido(s)");
+          //  }
+       // } catch (HeadlessException | SQLException e) {
+       //     JOptionPane.showMessageDialog(null, e);
+       // } finally {;
+        //    try {
+           //   conexao.close();
+           // } catch (SQLException ex) {
+           //    JOptionPane.showMessageDialog(null, ex);
+          // }
+      //  }
+ //  }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -126,6 +126,11 @@ public class TelaLogin extends javax.swing.JFrame {
         jBtnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnLoginActionPerformed(evt);
+            }
+        });
+        jBtnLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jBtnLoginKeyPressed(evt);
             }
         });
 
@@ -183,7 +188,7 @@ public class TelaLogin extends javax.swing.JFrame {
        try{
            String usuario, senha;
            
-           usuario = Usuario.getText();
+           usuario = JTxtUsuario.getText();
            senha = jTxtSenha.getText();
            
            UsuarioDAO dao = new UsuarioDAO();
@@ -201,6 +206,25 @@ public class TelaLogin extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         status();
     }//GEN-LAST:event_formWindowActivated
+
+    private void jBtnLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jBtnLoginKeyPressed
+       try{
+           String usuario, senha;
+           
+           usuario = JTxtUsuario.getText();
+           senha = jTxtSenha.getText();
+           
+           UsuarioDAO dao = new UsuarioDAO();
+           
+           dao.efetuarLogin(usuario ,senha);
+           
+           this.dispose();
+       
+       }catch (Exception e){
+            JOptionPane.showMessageDialog(null, "erro");
+
+       } 
+    }//GEN-LAST:event_jBtnLoginKeyPressed
 
     /**
      * @param args the command line arguments

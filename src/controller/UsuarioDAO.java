@@ -21,12 +21,12 @@ public class UsuarioDAO {
       public UsuarioDAO(){
           this.con = ModuloConexao.conectar();
     }
-       public void efetuaLogin(String email, String senha ) {
+       public void efetuarLogin(String email, String senha ) {
        
         try {
 
             //1 passo - SQL
-            String sql = "select * from tbusarios where usuario = ? and senha = ?";
+            String sql = "select * from tbusuarios where usuario = ? and senha = ?";
             PreparedStatement stmt;
             stmt = con.prepareStatement(sql);
             stmt.setString(1, email);
@@ -36,8 +36,16 @@ public class UsuarioDAO {
 
             if (rs.next()) {
                 //Usuario logou
-                TelaPrincipal tela = new TelaPrincipal();
-                tela.setVisible(true);
+                String perfil = rs.getString(6);
+                if(perfil.equals("Admim")){
+                     TelaPrincipal tela = new TelaPrincipal();
+                     tela.setVisible(true);
+                     tela.jMnItmUsuario.setEnabled(true);
+                     tela.jMnRelatorio.setEnabled(true);
+                }else{
+                     TelaPrincipal tela = new TelaPrincipal();
+                     tela.setVisible(true);
+                }
             } else {
                 //Dados incorretos
                 JOptionPane.showMessageDialog(null, "Dados incorretos!");
