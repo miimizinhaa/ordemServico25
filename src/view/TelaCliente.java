@@ -15,6 +15,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
      */
     public TelaCliente() {
         initComponents();
+        
     }
 
     /**
