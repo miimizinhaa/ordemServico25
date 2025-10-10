@@ -122,6 +122,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jBtnLogin.setBackground(new java.awt.Color(204, 204, 255));
         jBtnLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jBtnLogin.setMnemonic('e');
         jBtnLogin.setText("Entrar");
         jBtnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

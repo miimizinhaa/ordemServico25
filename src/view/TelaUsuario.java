@@ -31,11 +31,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtUsuId = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextFieldNome = new javax.swing.JTextField();
+        txtUsuNome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldFone = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -57,6 +57,12 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
         jLabel1.setText("*ID");
 
+        txtUsuId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuIdActionPerformed(evt);
+            }
+        });
+
         jButton1.setText("Pesquisar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,9 +74,9 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
         jLabel3.setText("*Nome");
 
-        jTextFieldNome.addActionListener(new java.awt.event.ActionListener() {
+        txtUsuNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNomeActionPerformed(evt);
+                txtUsuNomeActionPerformed(evt);
             }
         });
 
@@ -94,6 +100,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         });
 
         jButtonUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/update.png"))); // NOI18N
+        jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUpdateActionPerformed(evt);
+            }
+        });
 
         jButtonDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/delete.png"))); // NOI18N
 
@@ -108,7 +119,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                         .addGap(15, 15, 15)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtUsuId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
                         .addGap(154, 154, 154)
@@ -125,7 +136,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextFieldLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtUsuNome, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
@@ -147,7 +158,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,13 +166,13 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUsuId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
                     .addComponent(jLabel2))
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsuNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -188,30 +199,66 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if(txtUsuId.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Informe o Id do usuário");
+            txtUsuId.requestFocus();
+        }else{
+            UsuarioDAO dao = new UsuarioDAO();
+            Usuario usuario = new Usuario();
+            usuario = dao.buscarUsuario(Integer.parseInt(txtUsuId.getText()));
+            
+            txtUsuNome.setText(usuario.getUsuario());
+            jTextFieldLogin.setText(usuario.getLogin());
+            jPasswordField1.setText(usuario.getSenha());
+            jTextFieldFone.setText(usuario.getFone());
+            jComboBox.setSelectedItem(usuario.getPerfil());
+            jButtonCreate.setEnabled(false);
+            jButtonUpdate.setEnabled(true);
+            jButtonDelete.setEnabled(true);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextFieldNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeActionPerformed
+    private void txtUsuNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNomeActionPerformed
+    }//GEN-LAST:event_txtUsuNomeActionPerformed
 
     private void jButtonCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateActionPerformed
         Usuario obj = new Usuario();
-        obj.setUsuario(jTextField1.getText());
+        obj.setIdUser(Integer.parseInt(txtUsuId.getText()));
+        obj.setUsuario(txtUsuId.getText());
         obj.setFone(jTextFieldFone.getText());
         obj.setLogin(jTextFieldLogin.getText());
         obj.setSenha(jPasswordField1.getText());
         obj.setPerfil(jComboBox.getSelectedItem().toString());
-        if((jTextField1.getText().isEmpty()) || (jTextFieldNome.getText()isEmpty()) || (jTextFieldLogin.getText().isEmpty()) || (jPasswordField1.getPassword().length == 0) || (jComboBox.getSelectedItem().equals (""))) {
+        if((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty()) || (jTextFieldLogin.getText().isEmpty()) || (jPasswordField1.getPassword().length == 0) || (jComboBox.getSelectedItem().equals (""))) {
         
         JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios");
         } else{
                 UsuarioDAO dao = new UsuarioDAO();
                 dao.adicionarUsuario(obj);
-                
-                
                 }
     }//GEN-LAST:event_jButtonCreateActionPerformed
+
+    private void txtUsuIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuIdActionPerformed
+
+    private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
+                Usuario obj = new Usuario();
+        obj.setIdUser(Integer.parseInt(txtUsuId.getText()));
+        obj.setUsuario(txtUsuId.getText());
+        obj.setFone(jTextFieldFone.getText());
+        obj.setLogin(jTextFieldLogin.getText());
+        obj.setSenha(jPasswordField1.getText());
+        obj.setPerfil(jComboBox.getSelectedItem().toString());
+        if((txtUsuId.getText().isEmpty()) || (txtUsuNome.getText().isEmpty()) || (jTextFieldLogin.getText().isEmpty()) || (jPasswordField1.getPassword().length == 0) || (jComboBox.getSelectedItem().equals (""))) {
+        
+        JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios");
+        } else{
+                UsuarioDAO dao = new UsuarioDAO();
+                dao.alterarUsuario(obj);
+                }
+    }//GEN-LAST:event_jButtonUpdateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -229,9 +276,9 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldFone;
     private javax.swing.JTextField jTextFieldLogin;
-    private javax.swing.JTextField jTextFieldNome;
+    private javax.swing.JTextField txtUsuId;
+    private javax.swing.JTextField txtUsuNome;
     // End of variables declaration//GEN-END:variables
 }

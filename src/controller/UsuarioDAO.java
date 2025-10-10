@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package controller;
+import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.*;
 import jdbc.ModuloConexao;
@@ -40,12 +41,13 @@ public class UsuarioDAO {
             if (rs.next()) {
                 //Usuario logou
                 String perfil = rs.getString(6);
-                if(perfil.equals("Admim")){
+                if(perfil.equals("Admin")){
                      TelaPrincipal tela = new TelaPrincipal();
                      tela.setVisible(true);
                      tela.jMnItmUsuario.setEnabled(true);   
                      tela.jMnRelatorio.setEnabled(true);
                      tela.jLblUsuario.setText(rs.getString(2));
+                     tela.jLblUsuario.setForeground(Color.RED);
                 }else{
                      TelaPrincipal tela = new TelaPrincipal();
                      tela.setVisible(true);
@@ -85,9 +87,75 @@ public class UsuarioDAO {
                     con.close();
                }catch (SQLException ex){
                    JOptionPane.showMessageDialog(null, ex);
-    
            }
        }
 
     }
+       /**
+        * Método que buscar o usuário pelo ID
+        * @param IdUser
+        * @return 
+        */
+       
+   
+       public Usuario buscarUsuario(int IdUser){
+           try{
+               String sql  = "select * from tbusuarios WHERE iduser = ;"; 
+               con = ModuloConexao.conectar();
+               PreparedStatement stmt = con.prepareStatement(sql);
+               stmt.setInt(1, IdUser);
+               
+               ResultSet rs = stmt.executeQuery();
+               
+               if(rs.next()){
+                   Usuario usuario = new Usuario();
+                   usuario.setIdUser(rs.getInt("iduser"));
+                   usuario.setUsuario(rs.getString("usuario"));
+                   usuario.setFone(rs.getString("fone"));
+                   usuario.setLogin(rs.getString("login"));
+                   usuario.setSenha(rs.getString("senha"));
+                   usuario.setPerfil(rs.getString("perfil"));
+                   
+                   return usuario;
+               }else{
+                   JOptionPane.showMessageDialog(null,"Usuário não encontrado!!!");
+               }
+               }catch (SQLException e){
+                   JOptionPane.showMessageDialog(null, e);
+           }
+           return null;
+    
+        }   
+        public void alterarUsuario(Usuario obj){
+            try{
+                String sql = "update tbusuarios set  usuario = ?, fone = ?, login = ?, senha = ?, perfil = ?,  WHERE iduser = ?";
+                 con = ModuloConexao.conectar();
+                PreparedStatement stmt = con.prepareStatement(sql);
+              
+                stmt.setString(1, obj.getUsuario());
+                stmt.setString(2, obj.getFone());
+                stmt.setString(3, obj.getLogin());
+                stmt.setString(4, obj.getSenha());
+                stmt.setString(5, obj.getPerfil());
+                stmt.setInt(6, obj.getIdUser());
+                   
+                stmt.execute();
+                
+                stmt.close();
+                JOptionPane.showMessageDialog(null,"Usuário cadastrado com sucesso");
+                
+            }catch(SQLIntegrityConstraintViolationException el){
+                JOptionPane.showMessageDialog(null,"Login em uso.\nEscolha outro login.");
+                   
+            }catch(HeadlessException | SQLException e){
+                JOptionPane.showMessageDialog(null, e);
+            }finally{
+                try{
+                    con.close();
+                } catch (SQLException ex){
+                    JOptionPane.showMessageDialog(null, ex);
+                }
+            }    
+    }
+        
 }       
