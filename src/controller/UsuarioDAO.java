@@ -30,7 +30,7 @@ public class UsuarioDAO {
         try {
 
             //1 passo - SQL
-            String sql = "select * from tbusuarios where usuario = ? and senha = ?";
+            String sql = "select * from tbusuarios where login = ? and senha = md5(?)";
             PreparedStatement stmt;
             stmt = con.prepareStatement(sql);
             stmt.setString(1, email);
@@ -65,10 +65,9 @@ public class UsuarioDAO {
     }
        public void adicionarUsuario(Usuario obj){
            try{
-               String sql = "insert into tbusuarios(iduser, usuario, fone, login, senha, perfil) values (?,?,?,?,?,?,?)";
+               String sql = "insert into tbusuarios(iduser, usuario, fone, login, senha, perfil) values (?,?,?,?,md5(?),?)";
                con = ModuloConexao.conectar();
                PreparedStatement stmt = con.prepareStatement(sql);
-               stmt.setInt(1, obj.getIdUser());
                stmt.setString(2, obj.getUsuario());
                stmt.setString(3, obj.getFone());
                stmt.setString(4, obj.getLogin());
@@ -91,12 +90,6 @@ public class UsuarioDAO {
        }
 
     }
-       /**
-        * Método que buscar o usuário pelo ID
-        * @param IdUser
-        * @return 
-        */
-       
    
        public Usuario buscarUsuario(int IdUser){
            try{
@@ -142,7 +135,7 @@ public class UsuarioDAO {
                 stmt.execute();
                 
                 stmt.close();
-                JOptionPane.showMessageDialog(null,"Usuário cadastrado com sucesso");
+                JOptionPane.showMessageDialog(null,"Usuário alterado com sucesso");
                 
             }catch(SQLIntegrityConstraintViolationException el){
                 JOptionPane.showMessageDialog(null,"Login em uso.\nEscolha outro login.");
