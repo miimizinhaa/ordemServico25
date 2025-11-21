@@ -6,6 +6,7 @@ package view;
 
 import java.text.DateFormat;
 import java.util.Date;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -169,6 +170,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 jMnCadastroMouseClicked(evt);
             }
         });
+        jMnCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMnCadastroActionPerformed(evt);
+            }
+        });
 
         jMnItmCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMnItmCliente.setText("Cliente");
@@ -304,13 +310,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jMnItmClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnItmClienteActionPerformed
         TelaCliente cliente = new TelaCliente();
         cliente.setVisible(true);
-        jDesktopPane1.add(cliente);
+        jDesktopPane3.add(cliente);
     }//GEN-LAST:event_jMnItmClienteActionPerformed
 
     private void jMnItmUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnItmUsuarioActionPerformed
         TelaUsuario usuario = new TelaUsuario();
         usuario.setVisible(true);
-        jDesktopPane1.add(usuario);
+        jDesktopPane3.add(usuario);
     }//GEN-LAST:event_jMnItmUsuarioActionPerformed
 
     private void jMnRelClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnRelClienteActionPerformed
@@ -334,7 +340,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMnSobreMouseClicked
 
     private void jMnCadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMnCadastroMouseClicked
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jMnCadastroMouseClicked
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -349,7 +355,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMnItmUsuarioMouseClicked
 
     private void jMnItmServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnItmServicoActionPerformed
-        // TODO add your handling code here:
+        TelaOS tela = new TelaOS();
+        tela.setVisible(true);
+        jDesktopPane3.add(tela);
     }//GEN-LAST:event_jMnItmServicoActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -357,6 +365,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tela.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMnCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnCadastroActionPerformed
+
+    }//GEN-LAST:event_jMnCadastroActionPerformed
 
     /**
      * @param args the command line arguments

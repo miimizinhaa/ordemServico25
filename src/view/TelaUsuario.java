@@ -107,6 +107,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         });
 
         jButtonDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/delete.png"))); // NOI18N
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -158,7 +163,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,7 +224,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtUsuNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuNomeActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtUsuNomeActionPerformed
 
     private void jButtonCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateActionPerformed
@@ -240,7 +245,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonCreateActionPerformed
 
     private void txtUsuIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuIdActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtUsuIdActionPerformed
 
     private void jButtonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpdateActionPerformed
@@ -259,6 +264,10 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                 dao.alterarUsuario(obj);
                 }
     }//GEN-LAST:event_jButtonUpdateActionPerformed
+
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
+        
+    }//GEN-LAST:event_jButtonDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

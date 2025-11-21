@@ -88,7 +88,9 @@ public class Cliente {
         final Cliente other = (Cliente) obj;
         return this.id == other.id;
     }
-    
-      
+
+    public void setIdUser(int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

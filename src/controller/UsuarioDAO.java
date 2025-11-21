@@ -67,15 +67,15 @@ public class UsuarioDAO {
            try{
                String sql = "insert into tbusuarios(iduser, usuario, fone, login, senha, perfil) values (?,?,?,?,md5(?),?)";
                con = ModuloConexao.conectar();
-               PreparedStatement stmt = con.prepareStatement(sql);
-               stmt.setString(2, obj.getUsuario());
-               stmt.setString(3, obj.getFone());
-               stmt.setString(4, obj.getLogin());
-               stmt.setString(5, obj.getSenha());
-               stmt.setString(6, obj.getPerfil());
-               
-               stmt.execute();
-               stmt.close();
+               try (PreparedStatement stmt = con.prepareStatement(sql)) {
+                   stmt.setString(2, obj.getUsuario());
+                   stmt.setString(3, obj.getFone());
+                   stmt.setString(4, obj.getLogin());
+                   stmt.setString(5, obj.getSenha());
+                   stmt.setString(6, obj.getPerfil());
+                   
+                   stmt.execute();
+               }
                JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!!");
                
            }catch (SQLIntegrityConstraintViolationException el){
